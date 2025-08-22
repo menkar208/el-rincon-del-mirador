@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>El Rincón del Mirador — Café & Terraza</title>
+  <meta name="description" content="El Rincón del Mirador — Café, tapas y vistas. Terraza panorámica, eventos y espacio para reuniones." />
+  <meta name="keywords" content="café, terraza, mirador, tapas, eventos, restaurante" />
+  <meta name="author" content="El Rincón del Mirador" />
+
+  <!-- INSTRUCCIONES:
+       - Reemplaza los marcadores: TELEFONO, DIRECCION, EMAIL, NOMBRE_DE_DOMINIO, FORM_ID, LOGO.png
+       - Si usas Formspree: crea el formulario en https://formspree.io y pega la URL completa (p. ej. https://formspree.io/f/abcd1234)
+         dentro del atributo data-formspree-endpoint del formulario más abajo.
+       - Si no quieres Formspree, el formulario abrirá el cliente de correo como alternativa (mailto).
+  -->
+
+  <style>
+    :root{
+      --bg:#f7f6f3;
+      --accent:#3b6b5b;
+      --accent-2:#7fbf9a;
+      --text:#222;
+      --muted:#666;
+      --card:#ffffff;
+      --radius:12px;
+      --maxw:1100px;
+      --gap:18px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:linear-gradient(180deg, var(--bg), #fff);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+    .wrap{ max-width:var(--maxw); margin:28px auto; padding:20px; }
+
+    header{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .brand{ display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--text); }
+    .logo{
+      width:64px; height:64px; border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      color:white; display:grid; place-items:center; font-weight:700; font-size:20px;
+      box-shadow:0 6px 18px rgba(59,107,91,0.12);
+    }
+    nav{ display:flex; gap:12px; align-items:center; }
+    nav a{ text-decoration:none; color:var(--muted); padding:8px 12px; border-radius:8px; }
+    nav a:hover{ color:var(--accent); background:rgba(59,107,91,0.06) }
+
+    .hero{
+      margin-top:18px;
+      background: url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1400&q=60') center/cover no-repeat;
+      border-radius:16px; color:white; padding:48px; position:relative; overflow:hidden;
+      min-height:320px; display:flex; align-items:center;
+    }
+    .hero::after{
+      content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.45)); border-radius:16px;
+    }
+    .hero-inner{ position:relative; z-index:2; max-width:760px; }
+    .hero h1{ margin:0 0 8px; font-size:32px; letter-spacing:-0.02em; }
+    .hero p{ margin:0 0 16px; color:rgba(255,255,255,0.95) }
+    .cta{ display:inline-block; background:var(--accent); color:white; padding:12px 18px; border-radius:10px; text-decoration:none; font-weight:600; box-shadow:0 8px 20px rgba(59,107,91,0.18) }
+    .subcta{ margin-left:12px; color:white; opacity:0.9; text-decoration:none }
+
+    section{ margin:28px 0; }
+    .grid{ display:grid; gap:var(--gap); grid-template-columns:repeat(12,1fr); align-items:start; }
+
+    .card{ background:var(--card); border-radius:var(--radius); padding:16px; box-shadow:0 6px 18px rgba(20,20,20,0.04) }
+
+    .about{ grid-column: span 7; }
+    .info{ grid-column: span 5; }
+
+    h2{ margin-top:0; color:var(--accent); }
+    .muted{ color:var(--muted); font-size:0.95rem; }
+
+    .menu-list{ display:grid; gap:10px; }
+    .menu-item{ display:flex; justify-content:space-between; align-items:center; padding:10px; border-radius:10px; }
+    .menu-item .name{ font-weight:600; }
+    .price{ color:var(--accent); font-weight:700; }
+
+    .gallery{ display:grid; gap:10px; grid-template-columns:repeat(3,1fr); }
+    .gallery img{ width:100%; height:160px; object-fit:cover; border-radius:10px; display:block; cursor:pointer; }
+
+    form{ display:grid; gap:10px; }
+    input, textarea, select{ padding:10px 12px; border-radius:8px; border:1px solid #e6e6e6; font-size:0.98rem; width:100%; }
+    button[type="submit"]{ background:var(--accent); color:white; padding:12px; border-radius:10px; border:0; font-weight:700 }
+
+    footer{ margin-top:18px; padding:16px; text-align:center; color:var(--muted); font-size:0.95rem; }
+
+    /* Lightbox modal */
+    .modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,0.7); z-index:9999; }
+    .modal img{ max-width:92%; max-height:86%; border-radius:8px; box-shadow:0 12px 40px rgba(0,0,0,0.6); }
+
+    /* Cookie banner */
+    .cookie-banner{ position:fixed; left:16px; right:16px; bottom:16px; background:white; padding:12px 14px; border-radius:12px; box-shadow:0 8px 30px rgba(0,0,0,0.12); display:flex; gap:12px; align-items:center; justify-content:space-between; z-index:9998; }
+    .cookie-banner p{ margin:0; color:var(--muted); font-size:0.95rem; }
+
+    @media (max-width:900px){
+      .about{ grid-column: span 12; }
+      .info{ grid-column: span 12; }
+      .gallery{ grid-template-columns:repeat(2,1fr); }
+      .hero h1{ font-size:26px; }
+    }
+    @media (max-width:520px){
+      nav{ display:none; }
+      .gallery img{ height:120px }
+      .logo{ width:52px; height:52px; font-size:18px }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- Header -->
+    <header>
+      <a class="brand" href="#home" aria-label="El Rincón del Mirador">
+        <!-- Si tienes un logo, colócalo en el mismo directorio con nombre "logo.png" y reemplaza el div.logo por <img src="logo.png" alt="El Rincón del Mirador" style="width:64px;height:64px;border-radius:12px"> -->
+        <div class="logo" aria-hidden="true">RM</div>
+        <div>
+          <div style="font-weight:700">El Rincón del Mirador</div>
+          <div style="font-size:0.9rem;color:var(--muted)">Café • Terraza • Vistas</div>
+        </div>
+      </a>
+
+      <nav aria-label="Navegación principal">
+        <a href="#about">Nosotros</a>
+        <a href="#menu">Menú</a>
+        <a href="#galeria">Galería</a>
+        <a href="#reserva">Reservas</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </header>
+
+    <!-- Hero -->
+    <main id="home" class="hero" role="main">
+      <div class="hero-inner">
+        <h1>Bienvenido a <strong>El Rincón del Mirador</strong></h1>
+        <p>Disfruta de desayunos, tapas y una terraza con vistas panorámicas. Ideal para encuentros, brunch y eventos íntimos.</p>
+        <a class="cta" href="#reserva">Reservar mesa</a>
+        <a class="subcta" href="#menu">Ver menú ↓</a>
+      </div>
+    </main>
+
+    <!-- About + Info -->
+    <section aria-labelledby="about">
+      <div class="grid">
+        <div class="about card">
+          <h2 id="about">Nuestra historia</h2>
+          <p class="muted">En El Rincón del Mirador mezclamos sabores caseros con un entorno privilegiado. Desde 2018 ofrecemos productos locales, café de especialidad y opciones veganas. Nuestra terraza es perfecta para relajarse con un buen atardecer.</p>
+
+          <h3 style="margin-top:14px">Servicios</h3>
+          <ul style="margin:8px 0 0 18px; color:var(--muted)">
+            <li>Terraza panorámica</li>
+            <li>Menú para eventos y celebraciones</li>
+            <li>Wifi y enchufes para teletrabajo</li>
+            <li>Opciones veganas y sin gluten</li>
+          </ul>
+        </div>
+
+        <aside class="info card">
+          <h3>Información práctica</h3>
+          <p class="muted"><strong>Horario:</strong><br> Lun - Dom: 09:00 — 23:00</p>
+          <p class="muted"><strong>Dirección:</strong><br> Plaza del Mirador, 4 — Ciudad</p>
+          <p class="muted"><strong>Teléfono:</strong><br> +34 600 000 000</p>
+          <p style="margin-top:10px">
+            <a class="cta" href="#reserva">Reservar ahora</a>
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Menu -->
+    <section id="menu" class="card" aria-labelledby="menu-title">
+      <h2 id="menu-title">Menú destacado</h2>
+      <p class="muted">Selección de nuestras especialidades. Pregunta por el menú del día.</p>
+
+      <div class="menu-list" style="margin-top:10px">
+        <div class="menu-item">
+          <div><div class="name">Brunch Mirador</div><div class="muted" style="font-size:0.9rem">tostadas, huevos, aguacate</div></div>
+          <div class="price">9,50 €</div>
+        </div>
+        <div class="menu-item">
+          <div><div class="name">Tapas variadas</div><div class="muted" style="font-size:0.9rem">3 piezas surtidas</div></div>
+          <div class="price">12,00 €</div>
+        </div>
+        <div class="menu-item">
+          <div><div class="name">Café especial</div><div class="muted" style="font-size:0.9rem">origen local</div></div>
+          <div class="price">2,50 €</div>
+        </div>
+        <div class="menu-item">
+          <div><div class="name">Postre casero</div><div class="muted" style="font-size:0.9rem">tarta del día</div></div>
+          <div class="price">4,20 €</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="galeria" aria-labelledby="galeria-title">
+      <h2 id="galeria-title">Galería</h2>
+      <p class="muted">Un vistazo a nuestros espacios y platos.</p>
+      <div class="gallery" style="margin-top:12px">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=60" alt="Terraza con vistas" />
+        <img src="https://images.unsplash.com/photo-1496412705862-e0088f16f791?auto=format&fit=crop&w=800&q=60" alt="Desayuno y café" />
+        <img src="https://images.unsplash.com/photo-1498579809087-ef1e558fd1f7?auto=format&fit=crop&w=800&q=60" alt="Tapas y platos" />
+        <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=60" alt="Interior acogedor" />
+        <img src="https://images.unsplash.com/photo-1498654896293-37aacf113fd9?auto=format&fit=crop&w=800&q=60" alt="Tarta casera" />
+        <img src="https://images.unsplash.com/photo-1481833761820-0509d3217039?auto=format&fit=crop&w=800&q=60" alt="Atardecer desde la terraza" />
+      </div>
+    </section>
+
+    <!-- Reserva / Contacto -->
+    <section id="reserva" class="card" aria-labelledby="reserva-title">
+      <h2 id="reserva-title">Reservas</h2>
+      <p class="muted">Rellena el formulario o llámanos al <strong>+34 600 000 000</strong>.</p>
+
+      <!-- Formulario: para Formspree pon tu endpoint en data-formspree-endpoint. Si no lo cambias, abrirá mailto como fallback -->
+      <form id="formReserva" data-formspree-endpoint="https://formspree.io/f/FORM_ID" aria-label="Formulario de reservas">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <input type="text" id="nombre" name="nombre" placeholder="Nombre" required />
+          <input type="tel" id="telefono" name="telefono" placeholder="Teléfono" required />
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px;">
+          <input type="date" id="fecha" name="fecha" required />
+          <input type="time" id="hora" name="hora" required />
+        </div>
+
+        <select id="personas" name="personas" style="margin-top:8px" required>
+          <option value="">Personas</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>6+</option>
+        </select>
+
+        <textarea id="comentario" name="comentario" rows="3" placeholder="Comentarios (p. ej. alergias, celebraciones)"></textarea>
+
+        <!-- Opciones ocultas que Formspree usa a veces -->
+        <input type="hidden" name="_subject" value="Reserva - El Rincón del Mirador" />
+        <input type="hidden" name="_language" value="es" />
+
+        <button type="submit">Enviar reserva</button>
+
+        <p id="formMsg" style="margin:8px 0 0; color:var(--muted); font-size:0.95rem"></p>
+      </form>
+    </section>
+
+    <!-- Mapa simple -->
+    <section class="card">
+      <h2>Dónde estamos</h2>
+      <p class="muted">Plaza del Mirador, 4 — Ciudad</p>
+      <div style="width:100%;height:300px;border-radius:10px;overflow:hidden;margin-top:10px">
+        <!-- Reemplaza el src del iframe con tu embed real de Google Maps -->
+        <iframe title="mapa" src="https://www.google.com/maps/embed?pb=!1m18" style="border:0;width:100%;height:100%" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto" class="card" aria-labelledby="contacto-title">
+      <h2 id="contacto-title">Contacto</h2>
+      <p class="muted">Email: <a href="mailto:info@elrincondelmirador.com">info@elrincondelmirador.com</a> • Tel: +34 600 000 000</p>
+      <p class="muted">Síguenos en redes: <a href="#" style="color:var(--accent)">Instagram</a> · <a href="#" style="color:var(--accent)">Facebook</a></p>
+    </section>
+
+    <footer>
+      © <span id="year"></span> El Rincón del Mirador — Todos los derechos reservados.
+    </footer>
+  </div>
+
+  <!-- Lightbox modal -->
+  <div id="modal" class="modal" role="dialog" aria-hidden="true">
+    <img id="modalImg" src="" alt="Vista ampliada" />
+  </div>
+
+  <!-- Cookie banner -->
+  <div id="cookieBanner" class="cookie-banner" style="display:none">
+    <p>Usamos cookies para mejorar tu experiencia. Al usar este sitio aceptas nuestra política de cookies.</p>
+    <div style="display:flex;gap:8px">
+      <button id="acceptCookies" class="cta" style="background:var(--accent)">Aceptar</button>
+      <button id="denyCookies" style="background:transparent;border:0;color:var(--muted)">Configurar</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Año en footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // FORM: Envío a Formspree si el endpoint está personalizado, si no -> mailto fallback
+    document.getElementById('formReserva').addEventListener('submit', async function(e){
+      e.preventDefault();
+      const form = e.target;
+      const endpoint = form.dataset.formspreeEndpoint || '';
+      const msgEl = document.getElementById('formMsg');
+      const nombre = document.getElementById('nombre').value.trim();
+      const telefono = document.getElementById('telefono').value.trim();
+      const fecha = document.getElementById('fecha').value;
+      const hora = document.getElementById('hora').value;
+      const personas = document.getElementById('personas').value;
+      if(!nombre || !telefono || !fecha || !hora || !personas){
+        msgEl.textContent = 'Por favor rellena los campos obligatorios.';
+        return;
+      }
+
+      // Si no has configurado tu endpoint (deja FORM_ID), usamos mailto como fallback
+      if(!endpoint || endpoint.includes('FORM_ID')){
+        const subject = encodeURIComponent('Reserva: ' + nombre + ' - ' + fecha);
+        const body = encodeURIComponent(
+          'Nombre: ' + nombre + '\\n' +
+          'Teléfono: ' + telefono + '\\n' +
+          'Fecha: ' + fecha + ' ' + hora + '\\n' +
+          'Personas: ' + personas + '\\n' +
+          'Comentarios: ' + document.getElementById('comentario').value
+        );
+        window.location.href = 'mailto:info@elrincondelmirador.com?subject=' + subject + '&body=' + body;
+        msgEl.textContent = 'Abriendo tu aplicación de correo para enviar la reserva...';
+        return;
+      }
+
+      // Si hay endpoint real, enviamos con fetch (Formspree expects form-encoded or FormData)
+      const formData = new FormData(form);
+      try{
+        msgEl.textContent = 'Enviando reserva...';
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+        if(res.ok){
+          msgEl.textContent = '¡Reserva enviada! Te responderemos lo antes posible.';
+          form.reset();
+        } else {
+          const data = await res.json().catch(()=>null);
+          msgEl.textContent = data && data.error ? 'Error: ' + data.error : 'Error al enviar. Intenta por teléfono.';
+        }
+      } catch(err){
+        msgEl.textContent = 'Error de conexión. Intenta por teléfono.';
+      }
+    });
+
+    // Lightbox simple para la galería
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modalImg');
+    document.querySelectorAll('.gallery img').forEach(img => {
+      img.addEventListener('click', () => {
+        modalImg.src = img.src;
+        modal.style.display = 'flex';
+        modal.setAttribute('aria-hidden', 'false');
+      });
+    });
+    modal.addEventListener('click', () => {
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
+      modalImg.src = '';
+    });
+
+    // Cookie banner (simple)
+    function showCookieBannerIfNeeded(){
+      if(localStorage.getItem('cookies_accepted')) return;
+      document.getElementById('cookieBanner').style.display = 'flex';
+    }
+    document.getElementById('acceptCookies').addEventListener('click', ()=>{
+      localStorage.setItem('cookies_accepted', '1');
+      document.getElementById('cookieBanner').style.display = 'none';
+    });
+    document.getElementById('denyCookies').addEventListener('click', ()=>{
+      alert('Puedes contactar con nosotros para configurar preferencias.');
+    });
+    showCookieBannerIfNeeded();
+
+    // OPTIONAL: Si quieres añadir Calendly, crea una cuenta y sustituye la URL de ejemplo
+    // Ejemplo (comentar o descomentar): 
+    // const calendlyHtml = '<iframe src="https://calendly.com/TU_USUARIO/30min" style="border:0;width:100%;height:700px"></iframe>';
+    // document.getElementById('reserva').insertAdjacentHTML('beforeend', calendlyHtml);
+
+  </script>
+
+  <!-- SUGERENCIAS RÁPIDAS EN COMENTARIOS:
+       - Para quitar marca de agua o exportar en alta resolución, contrata plan pago en cada servicio (p. ej. Formspree para mayor cuota de envío si recibes muchos formularios).
+       - Para SEO extra: añade JSON-LD con "LocalBusiness" y sube "logo.png" optimizado.
+       - Para multi-idioma: considera crear /index.en.html y cambiar los enlaces.
+  -->
+
+</body>
+</html>
